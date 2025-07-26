@@ -8,6 +8,15 @@ else
   echo "[INFO] k3d cluster already exists."
 fi
 
+
+# remove the KUBECONFIG from bash and zsh if present because that is for k3s not k3d
+if grep -q 'export KUBECONFIG=/etc/rancher/k3s/k3s.yaml' ~/.zshrc; then
+  sed -i '/export KUBECONFIG=\/etc\/rancher\/k3s\/k3s.yaml/d' ~/.zshrc
+fi
+if grep -q 'export KUBECONFIG=/etc/rancher/k3s/k3s.yaml' ~/.bashrc; then
+  sed -i '/export KUBECONFIG=\/etc\/rancher\/k3s\/k3s.yaml/d' ~/.bashrc
+fi
+
 # Set KUBECONFIG to k3d's config
 export KUBECONFIG=$(k3d kubeconfig write k3s-default)
 
