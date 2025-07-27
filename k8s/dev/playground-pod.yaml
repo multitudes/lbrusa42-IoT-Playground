@@ -6,6 +6,6 @@ metadata:
 spec:
   containers:
   - name: playground
-    image: wil42/playground:latest
+    image: wil42/playground:v1
     ports:
     - containerPort: 80
