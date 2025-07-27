@@ -19,9 +19,9 @@ fi
 
 # Set KUBECONFIG to k3d's config
 export KUBECONFIG=$(k3d kubeconfig write k3s-default)
+echo "alias k='kubectl'" >> ~/.bashrc
 
 echo "K3d cluster created and KUBECONFIG set!"
-
 kubectl create namespace argocd
 kubectl create namespace dev
 
