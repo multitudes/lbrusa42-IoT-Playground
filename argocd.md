@@ -36,3 +36,37 @@ Keep your YAML files in version control (GitHub).
 Don’t delete your k3d/k3s cluster or its volumes.
 If you use k3d, make sure you don’t run k3d cluster delete unless you want to reset everything.
 Your Argo CD app and sync state will survive logouts and reboots!
+
+## summary
+Here’s a recap tailored to your setup:
+
+**Namespaces:**
+- In Kubernetes, namespaces are used to separate resources.  
+- `dev` is often used for development, but you can use it for any environment. You can have other namespaces like `prod` for production.
+- You have two namespaces:  
+  - `argocd`: for Argo CD itself (the GitOps tool).
+  - `dev`: for your app (the playground pod/deployment).
+
+**Workflow:**
+1. You create a `Deployment` (and optionally a `Service`) manifest for your app in the `dev` namespace.
+2. You store these manifests in your GitHub repo (e.g., `k8s/dev/deployment.yaml`).
+3. You create an Argo CD `Application` manifest (`app.yaml`) that tells Argo CD to watch your repo and deploy resources in the `dev` namespace.
+4. Argo CD syncs your cluster with your repo.  
+   - When you change the image version in `deployment.yaml` (e.g., from `v1` to `v2`) and push to GitHub, Argo CD automatically updates the pod in the `dev` namespace.
+5. The pod in `dev` is replaced with the new version.
+
+**Why two namespaces?**
+- `argocd` is for the Argo CD system itself.
+- `dev` is for your app. You could also have `prod`, `test`, etc., for other environments.
+
+**Summary:**
+- You deploy your app in `dev`.
+- Argo CD watches your repo and keeps the app in sync.
+- Changing the image version in GitHub updates the running pod in `dev`.
+- You can use more namespaces for other environments if needed.
+
+Let me know if you want a diagram or more details on any step!
+rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/wil42/playground:latest": failed to resolve reference "docker.io/wil42/playground:latest": docker.io/wil42/playground:latest: not found
+CONTAINER STATE
+playground
+Container is waiting because of ErrImagePull. It is not started and not ready.
