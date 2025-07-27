@@ -22,8 +22,8 @@ export KUBECONFIG=$(k3d kubeconfig write k3s-default)
 echo "alias k='kubectl'" >> ~/.bashrc
 
 echo "K3d cluster created and KUBECONFIG set!"
-kubectl create namespace argocd
-kubectl create namespace dev
+kubectl create namespace argocd || true
+kubectl create namespace dev || true
 
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 

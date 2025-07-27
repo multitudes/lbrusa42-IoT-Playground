@@ -104,3 +104,11 @@ Summary:
 
 On the host do `https://localhost:8081`
 
+## docker
+
+create the pod file yaml for the docker image. I will use the one already there, the wil42 v2 and v1
+again to see it on your host do
+```
+http://localhost:8888/
+```
+you will just see the response v2...
