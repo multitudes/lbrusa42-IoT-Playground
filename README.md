@@ -112,3 +112,13 @@ again to see it on your host do
 http://localhost:8888/
 ```
 you will just see the response v2...
+
+then add a service in dev with name service.yaml
+and apply
+```
+kubectl apply -f k8s/dev/service.yaml
+```
+you will see 
+```
+get svc -n dev
+```
