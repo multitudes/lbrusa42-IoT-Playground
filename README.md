@@ -129,3 +129,8 @@ you will see
 ```
 get svc -n dev
 ```
+
+## Clean up k3d
+```
+k3d cluster delete k3s-default
+```
