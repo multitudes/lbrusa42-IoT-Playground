@@ -40,7 +40,7 @@ You can set it manually:
 ```bash
 export KUBECONFIG=$(k3d kubeconfig write k3s-default)
 ```
-Then run your `kubectl` commands.
+Then run your `kubectl` commands. Probably did not need...
 
 Summary:
 - The containers are normal for k3d.
@@ -78,7 +78,7 @@ Yes, you can do this by setting up port forwarding in VirtualBox:
 
 3. In your VM, run:
    ```bash
-   kubectl port-forward svc/argocd-server -n argocd 8080:443
+   kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443
    ```
 
 Now, on your host, open `https://localhost:8081` in your browser.  
@@ -107,11 +107,13 @@ On the host do `https://localhost:8081`
 ## docker
 
 create the pod file yaml for the docker image. I will use the one already there, the wil42 v2 and v1
-again to see it on your host do
+again to see it on your host do on the guest vm:
 ```
+kubectl port-forward --address 0.0.0.0 svc/playground -n dev 8888:8888
+# then on the host browser after doing the port forwarding again 8888->8888
 http://localhost:8888/
 ```
-you will just see the response v2...
+you will just see the response v1...
 
 then add a service in dev with name service.yaml
 and apply
