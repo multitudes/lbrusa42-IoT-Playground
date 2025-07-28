@@ -11,6 +11,11 @@ newgrp docker
 docker ps
 ```
 
+check also 
+```
+kubectl cluster-info
+```
+
 ## the default k3d
 After successfully starting I get:
 ```

@@ -3,7 +3,7 @@
 # Create k3d cluster if not exists
 if ! k3d cluster list | grep -q '^k3s-default'; then
   echo "[INFO] Creating k3d cluster..."
-  k3d cluster create k3s-default
+  k3d cluster create k3s-default --port 8888:80@loadbalancer
 else
   echo "[INFO] k3d cluster already exists."
 fi
