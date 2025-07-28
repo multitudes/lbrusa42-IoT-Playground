@@ -5,7 +5,8 @@ metadata:
   namespace: dev
 spec:
   rules:
-  - host: localhost
+  - host:kubectl port-forward --address 0.0.0.0 svc/argocd-server -n argocd 8080:443
+ localhost
     http:
       paths:
       - path: /
