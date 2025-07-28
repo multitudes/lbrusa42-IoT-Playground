@@ -70,3 +70,29 @@ rpc error: code = NotFound desc = failed to pull and unpack image "docker.io/wil
 CONTAINER STATE
 playground
 Container is waiting because of ErrImagePull. It is not started and not ready.
+
+## how argo does its magic?
+Here’s how it works and how you can tell Argo CD did the update:
+
+1. **You change the image version in `deployment.yaml`** (e.g., from `wil42/playground:v1` to `wil42/playground:v2`).
+2. **You commit and push to GitHub.**
+3. **Argo CD detects the change** (it watches your repo) and automatically syncs your cluster.
+4. **Argo CD updates the Deployment in Kubernetes.**  
+   - The old pod is terminated.
+   - A new pod is created with the new image version.
+
+**How to verify Argo CD did the update:**
+- In the Argo CD UI, you’ll see a new sync event and the app graph will show the new pod with the updated image.
+- The pod name will change (new pod created).
+- You can check the pod’s image version:
+  ```bash
+  kubectl get pods -n dev
+  kubectl describe pod <new-pod-name> -n dev | grep Image
+  ```
+- The Argo CD UI will show the sync status and history, confirming the change was applied from Git.
+
+**Summary:**  
+- Argo CD is responsible for detecting the change in Git and applying it to the cluster.
+- k3d just runs the cluster; Argo CD does the sync and update.
+- You can always check the pod’s image version and the Argo CD sync history to confirm the update.
+
